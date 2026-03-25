@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/Authcontext/Authcontext'
 
 const Login = () => {
+    const { api, setUser, setToken } = useAuth()
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -9,12 +13,28 @@ const Login = () => {
     const submitHandler = async (e) => {
         e.preventDefault()
         setLoading(true)
-        
-        console.log('Login attempt:', { email, password })
-        
-        setTimeout(() => {
+
+        try {
+            const res = await api.post("/auth/login", {
+                email,
+                password
+            })
+
+            const data = res.data
+
+            setUser(data.user)
+            setToken(data.token)
+
+            localStorage.setItem("user", JSON.stringify(data.user))
+            localStorage.setItem("token", data.token)
+
+            navigate("/")
+
+        } catch (error) {
+            console.log(error.response?.data || error.message)
+        } finally {
             setLoading(false)
-        }, 1500)
+        }
     }
 
     return (
@@ -28,34 +48,33 @@ const Login = () => {
                 </h2>
 
                 <input
-                    autoComplete="off"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder="Email Address"
-                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 transition placeholder:text-gray-500"
+                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl"
                 />
-                
+
                 <input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
-                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 transition placeholder:text-gray-500"
+                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl"
                 />
 
                 <button
                     disabled={loading}
-                    className="bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-50 text-white font-semibold py-3 rounded-xl mt-3 transition-all duration-200 shadow-lg shadow-indigo-900/40"
+                    className="bg-indigo-600 text-white py-3 rounded-xl"
                 >
-                    {loading ? 'Logging in......' : 'Login'}
+                    {loading ? 'Logging in...' : 'Login'}
                 </button>
-                
+
                 <p className="text-center text-gray-400 text-sm">
                     Don't have an account?{" "}
                     <Link
                         to="/register"
-                        className="text-indigo-400 hover:text-indigo-300 font-medium transition"
+                        className="text-indigo-400"
                     >
                         Sign up
                     </Link>

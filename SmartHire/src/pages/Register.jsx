@@ -1,7 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/Authcontext/Authcontext'
+
 
 const Register = () => {
+    const { api, setUser, setToken } = useAuth()
+    const navigate = useNavigate()
+
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -11,12 +16,31 @@ const Register = () => {
     const submitHandler = async (e) => {
         e.preventDefault()
         setLoading(true)
-        
-        console.log('Register attempt:', { name, email, password, role })
-        
-        setTimeout(() => {
+
+        try {
+            const res = await api.post("/auth/signup", {
+                name,
+                email,
+                password,
+                userType:role
+            })
+
+            const data = res.data
+            console.log(data)
+
+            setUser(data.user)
+            setToken(data.token)
+
+            localStorage.setItem("user", JSON.stringify(data.user))
+            localStorage.setItem("token", data.token)
+
+            navigate("/")
+
+        } catch (error) {
+            console.log(error.response?.data || error.message)
+        } finally {
             setLoading(false)
-        }, 1500)
+        }
     }
 
     return (
@@ -28,26 +52,27 @@ const Register = () => {
                 <h2 className="text-2xl font-bold text-center text-white tracking-wide mb-6">
                     Create your account
                 </h2>
-                
+
                 <div className="flex gap-4 p-1 bg-gray-800/50 rounded-xl border border-gray-700">
                     <button
                         type="button"
                         onClick={() => setRole('candidate')}
-                        className={`flex-1 py-3 rounded-lg font-medium transition-all duration-200 ${
+                        className={`flex-1 py-3 rounded-lg ${
                             role === 'candidate'
-                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/40'
-                                : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                ? 'bg-indigo-600 text-white'
+                                : 'text-gray-400'
                         }`}
                     >
                         👤 Candidate
                     </button>
+
                     <button
                         type="button"
                         onClick={() => setRole('recruiter')}
-                        className={`flex-1 py-3 rounded-lg font-medium transition-all duration-200 ${
+                        className={`flex-1 py-3 rounded-lg ${
                             role === 'recruiter'
-                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/40'
-                                : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                ? 'bg-indigo-600 text-white'
+                                : 'text-gray-400'
                         }`}
                     >
                         💼 Recruiter
@@ -55,44 +80,39 @@ const Register = () => {
                 </div>
 
                 <input
-                    autoComplete="off"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
                     placeholder="Full Name"
-                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 transition placeholder:text-gray-500"
+                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl"
                 />
 
                 <input
-                   autoComplete="new-email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder="Email Address"
-                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 transition placeholder:text-gray-500"
+                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl"
                 />
-                
+
                 <input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
-                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 transition placeholder:text-gray-500"
+                    className="bg-gray-800 text-white border border-gray-700 p-4 rounded-xl"
                 />
 
                 <button
                     disabled={loading}
-                    className="bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-50 text-white font-semibold py-3 rounded-xl mt-3 transition-all duration-200 shadow-lg shadow-indigo-900/40"
+                    className="bg-indigo-600 text-white py-3 rounded-xl"
                 >
                     {loading ? 'Creating account...' : 'Sign Up'}
                 </button>
-                
+
                 <p className="text-center text-gray-400 text-sm">
                     Already have an account?{" "}
-                    <Link
-                        to="/login"
-                        className="text-indigo-400 hover:text-indigo-300 font-medium transition"
-                    >
+                    <Link to="/login" className="text-indigo-400">
                         Sign in
                     </Link>
                 </p>
