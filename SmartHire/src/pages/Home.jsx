@@ -1,11 +1,12 @@
+import React from 'react'
 import Navbar from '../components/Navbar'
-import Profile from './Profile'
+
 const HOme = () => {
   return (
-   <>
-   <Navbar/>
-   
-   </>
+    <div>
+      <Navbar/>
+      
+    </div>
   )
 }
 

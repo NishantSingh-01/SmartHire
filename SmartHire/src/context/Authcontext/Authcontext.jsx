@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     const savedToken = localStorage.getItem("token")
 
     if (savedUser && savedToken) {
-      setUser(JSON.parse(savedUser))
+      setUser(savedUser)
       setToken(savedToken)
     }
   }, [])
@@ -38,16 +38,40 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token")
   }
 
+
+  useEffect(() => {
+  const getuser = async () => {
+    try {
+      const token = localStorage.getItem("token")
+
+      const res = await api.get("/user/me", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      console.log(res.data)
+      setUser(res.data)
+
+    } catch (err) {
+     console.log("FULL ERROR:", err)
+  console.log("STATUS:", err.response?.status)
+  console.log("DATA:", err.response?.data)
+    }
+  }
+
+  getuser()
+}, [])
+
   return (
     <AuthContext.Provider
       value={{
         user,
         token,
+        setToken,
+        setUser,
         login,
         logout,
         api,
-        isLoggedIn: !!user,
-        role: user?.role
       }}
     >
       {children}

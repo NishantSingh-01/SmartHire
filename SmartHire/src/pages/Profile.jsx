@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
 const Profile = () => {
+     const navigate = useNavigate()
   const [resume, setResume] = useState(null)
 
   const handleSubmit = (e) => {
@@ -8,8 +10,9 @@ const Profile = () => {
 
     const formData = new FormData()
     formData.append("resume", resume)
-// todos add resume logic there>>
+
     console.log("Resume:", resume)
+    navigate('/')
   }
 
   return (

@@ -10,32 +10,33 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const submitHandler = async (e) => {
-        e.preventDefault()
-        setLoading(true)
+   const submitHandler = async (e) => {
+  e.preventDefault()
+  setLoading(true)
 
-        try {
-            const res = await api.post("/auth/login", {
-                email,
-                password
-            })
+  try {
+    const res = await api.post("/auth/login", {
+      email,
+      password
+    })
 
-            const data = res.data
+    const data = res.data
 
-            setUser(data.user)
-            setToken(data.token)
+    setToken(data.token)
+    localStorage.setItem("token", data.token)
 
-            localStorage.setItem("user", JSON.stringify(data.user))
-            localStorage.setItem("token", data.token)
+if (data.user.userType === "RECRUITER") {
+  navigate("/recruiter")
+} else {
+  navigate("/candidate")
+}
 
-            navigate("/")
-
-        } catch (error) {
-            console.log(error.response?.data || error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
+  } catch (error) {
+    console.log(error.response?.data || error.message)
+  } finally {
+    setLoading(false)
+  }
+}
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-black">

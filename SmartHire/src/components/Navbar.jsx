@@ -4,7 +4,7 @@ import { useAuth } from "../context/Authcontext/Authcontext"
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { isLoggedIn, user, logout } = useAuth()
+  const { token, user, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -35,14 +35,16 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-4">
 
-            <Link
-              to="/profile"
-              className="text-white bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700"
-            >
-              {user?.name ? user.name : "Profile"}
-            </Link>
+            {token && (
+              <Link
+                to="/profile"
+                className="text-white bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700"
+              >
+                {user?.name || "Profile"}
+              </Link>
+            )}
 
-            {!isLoggedIn ? (
+            {!token ? (
               <Link
                 to="/login"
                 className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
@@ -81,14 +83,16 @@ const Navbar = () => {
             <Link to="/companies" className="block text-gray-300">Companies</Link>
             <Link to="/about" className="block text-gray-300">About</Link>
 
-            <Link
-              to="/profile"
-              className="block bg-gray-800 text-white text-center py-2 rounded-lg"
-            >
-              {user?.name ? user.name : "Profile"}
-            </Link>
+            {token && (
+              <Link
+                to="/profile"
+                className="block bg-gray-800 text-white text-center py-2 rounded-lg"
+              >
+                {user?.name || "Profile"}
+              </Link>
+            )}
 
-            {!isLoggedIn ? (
+            {!token ? (
               <Link
                 to="/login"
                 className="block bg-indigo-600 text-white text-center py-2 rounded-lg"

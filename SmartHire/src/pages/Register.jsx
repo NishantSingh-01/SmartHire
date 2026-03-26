@@ -4,13 +4,13 @@ import { useAuth } from '../context/Authcontext/Authcontext'
 
 
 const Register = () => {
-    const { api, setUser, setToken } = useAuth()
+    const { api, setUser,login, setToken } = useAuth()
     const navigate = useNavigate()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [role, setRole] = useState('candidate')
+    const [role, setRole] = useState('CANDIDATE')
     const [loading, setLoading] = useState(false)
 
     const submitHandler = async (e) => {
@@ -18,23 +18,27 @@ const Register = () => {
         setLoading(true)
 
         try {
-            const res = await api.post("/auth/signup", {
-                name,
-                email,
-                password,
-                userType:role
-            })
-
+            const res = await api.post(
+                "/auth/signup",
+                {
+                    name,
+                    email,
+                    password,
+                    userType: role
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            )
             const data = res.data
             console.log(data)
 
-            setUser(data.user)
             setToken(data.token)
-
-            localStorage.setItem("user", JSON.stringify(data.user))
             localStorage.setItem("token", data.token)
 
-            navigate("/")
+            navigate("/login")
 
         } catch (error) {
             console.log(error.response?.data || error.message)
@@ -53,31 +57,31 @@ const Register = () => {
                     Create your account
                 </h2>
 
-                <div className="flex gap-4 p-1 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <button
-                        type="button"
-                        onClick={() => setRole('candidate')}
-                        className={`flex-1 py-3 rounded-lg ${
-                            role === 'candidate'
-                                ? 'bg-indigo-600 text-white'
-                                : 'text-gray-400'
-                        }`}
-                    >
-                        👤 Candidate
-                    </button>
+             <div className="flex gap-4 p-1 bg-gray-800/50 rounded-xl border border-gray-700">
+    <button
+        type="button"
+        onClick={() => setRole('CANDIDATE')}
+        className={`flex-1 py-3 rounded-lg ${
+            role === 'CANDIDATE'
+                ? 'bg-indigo-600 text-white'
+                : 'text-gray-400'
+        }`}
+    >
+        👤 Candidate
+    </button>
 
-                    <button
-                        type="button"
-                        onClick={() => setRole('recruiter')}
-                        className={`flex-1 py-3 rounded-lg ${
-                            role === 'recruiter'
-                                ? 'bg-indigo-600 text-white'
-                                : 'text-gray-400'
-                        }`}
-                    >
-                        💼 Recruiter
-                    </button>
-                </div>
+    <button
+        type="button"
+        onClick={() => setRole('RECRUITER')}
+        className={`flex-1 py-3 rounded-lg ${
+            role === 'RECRUITER'
+                ? 'bg-indigo-600 text-white'
+                : 'text-gray-400'
+        }`}
+    >
+        💼 Recruiter
+    </button>
+</div>
 
                 <input
                     value={name}
