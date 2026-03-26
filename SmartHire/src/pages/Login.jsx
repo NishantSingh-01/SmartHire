@@ -18,14 +18,16 @@ const Login = () => {
     const res = await api.post("/auth/login", {
       email,
       password
-    })
+    },
+)
 
     const data = res.data
 
     setToken(data.token)
+    console.log(data)
     localStorage.setItem("token", data.token)
 
-if (data.user.userType === "RECRUITER") {
+if (data.userType === "RECRUITER") {
   navigate("/recruiter")
 } else {
   navigate("/candidate")

@@ -9,6 +9,7 @@ import Candidate from './pages/Candidate'
 import Recruiter from './pages/Recruiter'
 import CreateJob from './pages/CreateJob'
 import Applicant from './pages/Applicant'
+import Jobs from './pages/Jobs'
 
 function App() {
   const { user, token } = useAuth()
@@ -35,6 +36,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/post-job" element={<CreateJob />} />
       <Route path="/recruiter/applicants" element={<Applicant />} />
+      <Route path="/jobs" element={<Jobs />} />
 
       <Route path="/candidate" element={<Candidate />} />
       <Route path="/recruiter" element={<Recruiter />} />

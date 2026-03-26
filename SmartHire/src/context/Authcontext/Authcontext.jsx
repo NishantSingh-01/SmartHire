@@ -5,27 +5,20 @@ const AuthContext = createContext()
 
 const api = axios.create({
   baseURL: "https://smarthire-wz65.onrender.com/api",
-  withCredentials: true
 })
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
+  const [token, setToken] = useState(localStorage.getItem("token") || null)
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user")
-    const savedToken = localStorage.getItem("token")
-
-    if (savedUser && savedToken) {
-      setUser(savedUser)
-      setToken(savedToken)
-    }
+    if (savedUser) setUser(JSON.parse(savedUser))
   }, [])
 
   const login = (data) => {
     setUser(data.user)
     setToken(data.token)
-
     localStorage.setItem("user", JSON.stringify(data.user))
     localStorage.setItem("token", data.token)
   }
@@ -33,34 +26,32 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null)
     setToken(null)
-
     localStorage.removeItem("user")
     localStorage.removeItem("token")
   }
 
-
   useEffect(() => {
-  const getuser = async () => {
-    try {
-      const token = localStorage.getItem("token")
+    const getUser = async () => {
+      if (!token) return 
 
-      const res = await api.get("/user/me", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      console.log(res.data)
-      setUser(res.data)
-
-    } catch (err) {
-     console.log("FULL ERROR:", err)
-  console.log("STATUS:", err.response?.status)
-  console.log("DATA:", err.response?.data)
+      try {
+        const res = await api.get("/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        setUser(res.data)
+      } catch (err) {
+        console.log("FULL ERROR:", err)
+        console.log("STATUS:", err.response?.status)
+        console.log("DATA:", err.response?.data)
+        // Optional: auto logout if token is invalid
+        if (err.response?.status === 403) logout()
+      }
     }
-  }
 
-  getuser()
-}, [])
+    getUser()
+  }, [token]) 
 
   return (
     <AuthContext.Provider
