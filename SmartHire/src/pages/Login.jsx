@@ -22,7 +22,7 @@ const Login = () => {
 )
 
     const data = res.data
-
+    //  console.log(data)
     setToken(data.token)
     console.log(data)
     localStorage.setItem("token", data.token)

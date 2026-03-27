@@ -19,18 +19,28 @@ function App() {
     return children
   }
 
+  const loginRedirect = () => {
+    if (!token) return <Login />
+
+    if (!user) return null
+
+    if (user.userType === "RECRUITER") {
+      return <Navigate to="/recruiter" />
+    }
+
+    if (user.userType === "CANDIDATE") {
+      return <Navigate to="/candidate" />
+    }
+
+    return <Login />
+  }
+
   return (
     <Routes>
 
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={loginRedirect()} />
 
-      <Route path="/login" element={
-        token
-          ? user?.userType === "RECRUITER"
-            ? <Navigate to="/recruiter" />
-            : <Navigate to="/candidate" />
-          : <Login />
-      } />
+      <Route path="/login" element={loginRedirect()} />
 
       <Route path="/register" element={<Register />} />
 
@@ -39,7 +49,13 @@ function App() {
           <Profile />
         </PrivateRoute>
       } />
-      <Route path="/resume-analysis" element={<ResumeAnalysis />} />
+
+      <Route path="/resume-analysis" element={
+        <PrivateRoute>
+          <ResumeAnalysis />
+        </PrivateRoute>
+      } />
+
       <Route path="/post-job" element={
         <PrivateRoute>
           <CreateJob />

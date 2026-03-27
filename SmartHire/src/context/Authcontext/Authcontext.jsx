@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
           },
         })
+        // console.log(res)
         setUser(res.data)
       } catch (err) {
         console.log("FULL ERROR:", err)
