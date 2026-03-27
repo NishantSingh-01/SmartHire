@@ -1,11 +1,34 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/Authcontext/Authcontext"
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { token, user, logout } = useAuth()
+  const [resumeExists, setResumeExists] = useState(false)
+
+  const { token, user, logout, api } = useAuth()
   const navigate = useNavigate()
+
+useEffect(() => {
+  const checkResume = async () => {
+    try {
+      if (!token) return
+
+      const res = await api.get("/resume/exists", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setResumeExists(res.data.hasResume)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  checkResume()
+}, [token])
 
   const handleLogout = () => {
     logout()
@@ -15,6 +38,7 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
+
         <div className="flex items-center justify-between h-16">
 
           <Link to="/" className="flex items-center space-x-2">
@@ -27,10 +51,31 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/candidate" className="text-gray-300 hover:text-white">Home</Link>
-            <Link to="/jobs" className="text-gray-300 hover:text-white">Jobs</Link>
-            <Link to="/companies" className="text-gray-300 hover:text-white">Companies</Link>
-            <Link to="/about" className="text-gray-300 hover:text-white">About</Link>
+            <Link to="/candidate" className="text-gray-300 hover:text-white">
+              Home
+            </Link>
+
+            <Link to="/jobs" className="text-gray-300 hover:text-white">
+              Jobs
+            </Link>
+
+            {token && !resumeExists && (
+              <Link
+                to="/resume"
+                className="text-yellow-400 hover:text-white"
+              >
+                Upload Resume
+              </Link>
+            )}
+
+            {token && resumeExists && (
+              <Link
+                to="/resume-analysis"
+                className="text-green-400 hover:text-white"
+              >
+                Resume Analysis
+              </Link>
+            )}
           </div>
 
           <div className="hidden md:flex items-center gap-4">
@@ -65,7 +110,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white"
+              className="text-white text-xl"
             >
               ☰
             </button>
@@ -78,10 +123,31 @@ const Navbar = () => {
         <div className="md:hidden bg-gray-900 border-t border-gray-800">
           <div className="px-4 py-4 space-y-3">
 
-            <Link to="/" className="block text-gray-300">Home</Link>
-            <Link to="/jobs" className="block text-gray-300">Jobs</Link>
-            <Link to="/companies" className="block text-gray-300">Companies</Link>
-            <Link to="/about" className="block text-gray-300">About</Link>
+            <Link to="/candidate" className="block text-gray-300">
+              Home
+            </Link>
+
+            <Link to="/jobs" className="block text-gray-300">
+              Jobs
+            </Link>
+
+            {token && !resumeExists && (
+              <Link
+                to="/upload-resume"
+                className="block text-yellow-400"
+              >
+                Upload Resume
+              </Link>
+            )}
+
+            {token && resumeExists && (
+              <Link
+                to="/resume-analysis"
+                className="block text-green-400"
+              >
+                Resume Analysis
+              </Link>
+            )}
 
             {token && (
               <Link

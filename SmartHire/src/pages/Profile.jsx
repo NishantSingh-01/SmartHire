@@ -1,19 +1,36 @@
 import { useState } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/Authcontext/Authcontext"
 
 const Profile = () => {
-     const navigate = useNavigate()
+  const navigate = useNavigate()
+  const { api, token } = useAuth()
+
   const [resume, setResume] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+  e.preventDefault()
 
+  if (!resume) return
+
+  try {
     const formData = new FormData()
-    formData.append("resume", resume)
+    formData.append("file", resume)
 
-    console.log("Resume:", resume)
-    navigate('/')
+  const res=   await api.post("/resume/upload", formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data"
+      }
+    })
+    console.log(res)
+    navigate("/candidate")
+
+  } catch (error) {
+    console.log(error.response?.data)
   }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-black flex justify-center items-start py-10 px-4">
@@ -60,9 +77,10 @@ const Profile = () => {
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-indigo-900/40"
         >
-          Save Changes
+          {loading ? "Uploading..." : "Save Changes"}
         </button>
       </form>
     </div>
