@@ -40,15 +40,14 @@ const RecruiterNavbar = () => {
               Applicants
             </Link>
 
-            <Link to="/recruiter/company" className="text-gray-300 hover:text-white">
-              Company
+            <Link to="/recruiter/jobs-created" className="block text-gray-300">
+              Jobs Posted
             </Link>
           </div>
 
-          {/* Right Side */}
           <div className="hidden md:flex items-center gap-4">
 
-       
+
 
             <button
               onClick={handleLogout}
@@ -59,7 +58,6 @@ const RecruiterNavbar = () => {
 
           </div>
 
-          {/* Mobile Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -72,7 +70,6 @@ const RecruiterNavbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900 border-t border-gray-800">
           <div className="px-4 py-4 space-y-3">
@@ -89,8 +86,8 @@ const RecruiterNavbar = () => {
               Applicants
             </Link>
 
-            <Link to="/recruiter/company" className="block text-gray-300">
-              Company
+            <Link to="/recruiter/jobs-created" className="block text-gray-300">
+              Jobs Posted
             </Link>
 
             <Link

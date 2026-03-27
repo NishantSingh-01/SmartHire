@@ -10,6 +10,7 @@ import CreateJob from './pages/CreateJob'
 import Applicant from './pages/Applicant'
 import Jobs from './pages/Jobs'
 import ResumeAnalysis from './components/ResumeAnalysis'
+import RecruiterMyJobs from './components/RecruiterMyJobs'
 
 function App() {
   const { user, token } = useAuth()
@@ -53,6 +54,11 @@ function App() {
       <Route path="/resume-analysis" element={
         <PrivateRoute>
           <ResumeAnalysis />
+        </PrivateRoute>
+      } />  
+      <Route path="/recruiter/jobs-created" element={
+        <PrivateRoute>
+          <RecruiterMyJobs />
         </PrivateRoute>
       } />
 
