@@ -82,7 +82,7 @@ useEffect(() => {
 
             {token && (
               <Link
-                to="/profile"
+          
                 className="text-white bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700"
               >
                 {user?.name || "Profile"}
@@ -150,13 +150,10 @@ useEffect(() => {
             )}
 
             {token && (
-              <Link
-                to="/profile"
-                className="block bg-gray-800 text-white text-center py-2 rounded-lg"
-              >
-                {user?.name || "Profile"}
-              </Link>
-            )}
+  <div className="flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-lg text-sm">
+    👤 {user?.name || "Profile"}
+  </div>
+)}
 
             {!token ? (
               <Link

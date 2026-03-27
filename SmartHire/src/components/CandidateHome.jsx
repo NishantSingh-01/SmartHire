@@ -35,10 +35,10 @@ const CandidateHome = () => {
           </Link>
 
           <Link
-            to="/profile"
+            to="/resume-analysis"
             className="bg-slate-800/80 hover:bg-slate-700 px-6 py-3 rounded-lg font-medium transition border border-slate-600"
           >
-            Update Profile
+           Resume Analysis
           </Link>
         </div>
 
