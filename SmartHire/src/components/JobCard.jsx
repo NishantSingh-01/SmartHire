@@ -5,7 +5,6 @@ const JobCard = () => {
     <div className=" bg-gray-900 py-16 px-6 sm:px-12 lg:px-20 flex items-center justify-center">
       <div className="w-full max-w-7xl bg-gray-800 rounded-3xl shadow-2xl border border-gray-700 p-12 space-y-10">
         
-        {/* Hero Text */}
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Find the job you love 
@@ -15,7 +14,6 @@ const JobCard = () => {
           </p>
         </div>
 
-        {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           <div className="flex items-start space-x-4 p-6 bg-gray-700 rounded-2xl border border-gray-600">

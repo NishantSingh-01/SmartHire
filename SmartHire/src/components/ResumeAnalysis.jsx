@@ -14,7 +14,7 @@ const ResumeAnalysis = () => {
           }
         })
 
-        console.log(res.data, "resume analysis")
+        // console.log(res.data, "resume analysis")
         setData(res.data)
 
       } catch (error) {

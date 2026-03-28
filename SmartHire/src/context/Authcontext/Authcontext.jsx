@@ -5,6 +5,7 @@ const AuthContext = createContext()
 
 const api = axios.create({
   baseURL: "https://smarthire-wz65.onrender.com/api",
+  // baseURL: "http://44.201.18.73:8080/api",
 })
 
 export const AuthProvider = ({ children }) => {

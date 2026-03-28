@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/Authcontext/Authcontext"
+import toast from "react-hot-toast"
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -32,6 +33,7 @@ useEffect(() => {
 
   const handleLogout = () => {
     logout()
+    toast.success("Logout successfull")
     navigate("/login")
   }
 
@@ -57,6 +59,9 @@ useEffect(() => {
 
             <Link to="/jobs" className="text-gray-300 hover:text-white">
               Jobs
+            </Link>
+            <Link to="/candidate/applications" className="text-gray-300 hover:text-white">
+             My Application
             </Link>
 
             {token && !resumeExists && (

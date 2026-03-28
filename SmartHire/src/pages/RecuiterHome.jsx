@@ -33,10 +33,10 @@ const RecuiterHome = () => {
           </Link>
 
           <Link
-            to="/recruiter-profile"
+            to="/recruiter/applicants"
             className="bg-slate-800/80 hover:bg-slate-700 px-6 py-3 rounded-lg font-medium transition border border-slate-600"
           >
-            Create Recruiter Profile
+            Get Applicants
           </Link>
         </div>
 

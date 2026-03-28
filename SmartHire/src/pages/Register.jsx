@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/Authcontext/Authcontext'
-
+import toast from "react-hot-toast"
 
 const Register = () => {
     const { api, setUser,login, setToken } = useAuth()
@@ -37,11 +37,12 @@ const Register = () => {
 
             setToken(data.token)
             localStorage.setItem("token", data.token)
-
+            toast.success("Register Succesfully ,pls Verify Email to Login")
             navigate("/login")
 
         } catch (error) {
             console.log(error.response?.data || error.message)
+             toast.error(error.response?.data?.message || "Signup failed")
         } finally {
             setLoading(false)
         }

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/Authcontext/Authcontext"
+import toast from "react-hot-toast"
 
 const Profile = () => {
   const navigate = useNavigate()
@@ -25,9 +26,13 @@ const Profile = () => {
       }
     })
     console.log(res)
+       toast.success("Resume Uploaded , See Your Analysis")
     navigate("/candidate")
 
   } catch (error) {
+      toast.error(
+      err.response?.data?.message || "Failed to Upload Resume"
+    )
     console.log(error.response?.data)
   }
 }

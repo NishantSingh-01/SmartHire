@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/Authcontext/Authcontext'
+import toast from 'react-hot-toast'
 
 const Login = () => {
     const { api, setUser, setToken } = useAuth()
@@ -26,7 +27,7 @@ const Login = () => {
     setToken(data.token)
     console.log(data)
     localStorage.setItem("token", data.token)
-
+    toast.success("Login successfull")
 if (data.userType === "RECRUITER") {
   navigate("/recruiter")
 } else {
@@ -34,6 +35,7 @@ if (data.userType === "RECRUITER") {
 }
 
   } catch (error) {
+     toast.error(error.response?.data?.message || "Login failed")
     console.log(error.response?.data || error.message)
   } finally {
     setLoading(false)

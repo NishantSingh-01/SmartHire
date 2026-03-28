@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/Authcontext/Authcontext'
-
+import { Toaster } from "react-hot-toast"
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
@@ -11,6 +11,9 @@ import Applicant from './pages/Applicant'
 import Jobs from './pages/Jobs'
 import ResumeAnalysis from './components/ResumeAnalysis'
 import RecruiterMyJobs from './components/RecruiterMyJobs'
+import RecruiterApplications from './components/RecruiterApplications'
+import ApplicantDetails from './components/ApplicantDetails'
+import MyApplications from './components/MyApplications'
 
 function App() {
   const { user, token } = useAuth()
@@ -37,6 +40,18 @@ function App() {
   }
 
   return (
+    
+    <>
+       <Toaster 
+      position="top-right"
+      toastOptions={{
+        duration: 3000,
+        style: {
+          background: "#1f2937",
+          color: "#fff",
+        }
+      }}
+    />
     <Routes>
 
       <Route path="/" element={loginRedirect()} />
@@ -59,6 +74,21 @@ function App() {
       <Route path="/recruiter/jobs-created" element={
         <PrivateRoute>
           <RecruiterMyJobs />
+        </PrivateRoute>
+      } />
+      <Route path="/recruiter/applicants" element={
+        <PrivateRoute>
+          <RecruiterApplications />
+        </PrivateRoute>
+      } />
+      <Route   path="/recruiter/applications/:id" element={
+        <PrivateRoute>
+          <ApplicantDetails />
+        </PrivateRoute>
+      } />
+      <Route   path="/candidate/applications" element={
+        <PrivateRoute>
+          <MyApplications />
         </PrivateRoute>
       } />
 
@@ -93,6 +123,7 @@ function App() {
       } />
 
     </Routes>
+    </>
   )
 }
 
