@@ -80,3 +80,4 @@ const RecuiterHome = () => {
 }
 
 export default RecuiterHome
+

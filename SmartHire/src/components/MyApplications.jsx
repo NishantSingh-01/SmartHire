@@ -41,7 +41,7 @@ const MyApplications = () => {
       <div className="max-w-6xl mx-auto">
 
         <h1 className="text-3xl font-bold mb-6">
-          My Applications
+          My Applications ....
         </h1>
 
         {applications.length === 0 ? (

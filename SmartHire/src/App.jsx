@@ -7,7 +7,6 @@ import Profile from './pages/Profile'
 import Candidate from './pages/Candidate'
 import Recruiter from './pages/Recruiter'
 import CreateJob from './pages/CreateJob'
-import Applicant from './pages/Applicant'
 import Jobs from './pages/Jobs'
 import ResumeAnalysis from './components/ResumeAnalysis'
 import RecruiterMyJobs from './components/RecruiterMyJobs'
@@ -100,11 +99,6 @@ function App() {
         </PrivateRoute>
       } />
 
-      <Route path="/recruiter/applicants" element={
-        <PrivateRoute>
-          <Applicant />
-        </PrivateRoute>
-      } />
       <Route path="/job-insights/:id" element={
         <PrivateRoute>
            <DetailJob />

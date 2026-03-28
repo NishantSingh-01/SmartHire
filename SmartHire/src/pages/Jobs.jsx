@@ -162,6 +162,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/Authcontext/Authcontext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState([]);
@@ -204,23 +205,25 @@ const JobsPage = () => {
     }
   }, [token]);
 
-  const handleApply = async (id) => {
-    try {
-      await api.post(
-        `/applications/apply/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+const handleApply = async (id) => {
+  try {
+    await api.post(
+      `/applications/apply/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-      setAppliedJobs((prev) => [...prev, id]);
-    } catch (error) {
-      console.log(error.response?.data || error.message);
-    }
-  };
+    setAppliedJobs((prev) => [...prev, id]);
+    toast.success("Job Applied");
+  } catch (error) {
+    toast.error(error.response?.data?.message || error.message || "Something went wrong");
+    console.log(error.response?.data || error.message);
+  }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-slate-700 to-slate-900 text-white py-10 px-4">
