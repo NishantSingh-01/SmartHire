@@ -44,7 +44,7 @@ const RecuiterHome = () => {
           
           <div className="flex items-center justify-center gap-3 bg-slate-800/40 backdrop-blur-md p-4 rounded-xl border border-slate-700">
             <div className="bg-indigo-600 p-3 rounded-full">
-              👥
+              .
             </div>
             <div className="text-left">
               <h3 className="font-bold text-lg">1M+</h3>

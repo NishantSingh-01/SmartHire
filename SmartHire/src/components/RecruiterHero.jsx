@@ -64,15 +64,15 @@ const RecruiterHero = () => {
           </div>
           
           <p className="text-green-400 text-lg mb-3 font-medium flex items-center justify-center gap-2">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
+            <span className="w-2 h-2 bg-blue-400 rounded-full "></span>
             Recruiter Panel
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
+            <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
           </p>
           
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
             Manage your hiring
             <br />
-            <span className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 bg-clip-text text-transparent animate-gradient">
+            <span className="bg-gradient-to-r from-blue-400 via-green-500 to-green-600 bg-clip-text text-transparent ">
               and find top talent
             </span>
             <br />
@@ -95,7 +95,7 @@ const RecruiterHero = () => {
           
           <div className="mt-12 flex items-center pb-5 justify-center gap-4 text-sm text-gray-400">
             <div className="flex items-center gap-2 group cursor-pointer hover:text-green-400 transition-colors">
-              <span className="w-2 h-2 bg-green-400 rounded-full group-hover:animate-pulse"></span>
+              <span className="w-2 h-2 bg-blue-400 rounded-full group-hover:animate-pulse"></span>
               <span>Real-time updates</span>
             </div>
             <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
