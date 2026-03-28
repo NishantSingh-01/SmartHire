@@ -4,7 +4,7 @@ import { useAuth } from '../context/Authcontext/Authcontext'
 import toast from "react-hot-toast"
 
 const Register = () => {
-    const { api, setUser,login, setToken } = useAuth()
+    const { api, setUser, login, setToken } = useAuth()
     const navigate = useNavigate()
 
     const [name, setName] = useState('')
@@ -42,7 +42,7 @@ const Register = () => {
 
         } catch (error) {
             console.log(error.response?.data || error.message)
-             toast.error(error.response?.data?.message || "Signup failed")
+            toast.error(error.response?.data?.message || "Signup failed")
         } finally {
             setLoading(false)
         }
@@ -58,31 +58,29 @@ const Register = () => {
                     Create your account
                 </h2>
 
-             <div className="flex gap-4 p-1 bg-gray-800/50 rounded-xl border border-gray-700">
-    <button
-        type="button"
-        onClick={() => setRole('CANDIDATE')}
-        className={`flex-1 py-3 rounded-lg ${
-            role === 'CANDIDATE'
-                ? 'bg-indigo-600 text-white'
-                : 'text-gray-400'
-        }`}
-    >
-        👤 Candidate
-    </button>
+                <div className="flex gap-4 p-1 bg-gray-800/50 rounded-xl border border-gray-700">
+                    <button
+                        type="button"
+                        onClick={() => setRole('CANDIDATE')}
+                        className={`flex-1 py-3 rounded-lg ${role === 'CANDIDATE'
+                                ? 'bg-indigo-600 text-white'
+                                : 'text-gray-400'
+                            }`}
+                    >
+                        👤 Candidate
+                    </button>
 
-    <button
-        type="button"
-        onClick={() => setRole('RECRUITER')}
-        className={`flex-1 py-3 rounded-lg ${
-            role === 'RECRUITER'
-                ? 'bg-indigo-600 text-white'
-                : 'text-gray-400'
-        }`}
-    >
-        💼 Recruiter
-    </button>
-</div>
+                    <button
+                        type="button"
+                        onClick={() => setRole('RECRUITER')}
+                        className={`flex-1 py-3 rounded-lg ${role === 'RECRUITER'
+                                ? 'bg-indigo-600 text-white'
+                                : 'text-gray-400'
+                            }`}
+                    >
+                        💼 Recruiter
+                    </button>
+                </div>
 
                 <input
                     value={name}

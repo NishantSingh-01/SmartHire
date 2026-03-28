@@ -14,6 +14,7 @@ import RecruiterMyJobs from './components/RecruiterMyJobs'
 import RecruiterApplications from './components/RecruiterApplications'
 import ApplicantDetails from './components/ApplicantDetails'
 import MyApplications from './components/MyApplications'
+import DetailJob from './components/DetailJob'
 
 function App() {
   const { user, token } = useAuth()
@@ -59,6 +60,7 @@ function App() {
       <Route path="/login" element={loginRedirect()} />
 
       <Route path="/register" element={<Register />} />
+  
 
       <Route path="/resume" element={
         <PrivateRoute>
@@ -103,6 +105,11 @@ function App() {
           <Applicant />
         </PrivateRoute>
       } />
+      <Route path="/job-insights/:id" element={
+        <PrivateRoute>
+           <DetailJob />
+        </PrivateRoute>
+        } />
 
       <Route path="/jobs" element={
         <PrivateRoute>
