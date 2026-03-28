@@ -10,26 +10,26 @@ const Navbar = () => {
   const { token, user, logout, api } = useAuth()
   const navigate = useNavigate()
 
-useEffect(() => {
-  const checkResume = async () => {
-    try {
-      if (!token) return
+  useEffect(() => {
+    const checkResume = async () => {
+      try {
+        if (!token) return
 
-      const res = await api.get("/resume/exists", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+        const res = await api.get("/resume/exists", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
 
-      setResumeExists(res.data.hasResume)
+        setResumeExists(res.data.hasResume)
 
-    } catch (error) {
-      console.log(error)
+      } catch (error) {
+        console.log(error)
+      }
     }
-  }
 
-  checkResume()
-}, [token])
+    checkResume()
+  }, [token])
 
   const handleLogout = () => {
     logout()
@@ -43,12 +43,18 @@ useEffect(() => {
 
         <div className="flex items-center justify-between h-16">
 
-          <Link to="/" className="flex items-center space-x-2">
+          <Link className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">S</span>
+              <svg
+                className="w-5 h-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-1 1v9a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1h-1V6a4 4 0 00-4-4zm0 2a2 2 0 012 2v1h-4V6a2 2 0 012-2z" />
+              </svg>
             </div>
             <span className="text-white font-bold text-lg">
-              SmartHire
+              SmartHireg
             </span>
           </Link>
 
@@ -61,7 +67,7 @@ useEffect(() => {
               Jobs
             </Link>
             <Link to="/candidate/applications" className="text-gray-300 hover:text-white">
-             My Application
+              My Application
             </Link>
 
             {token && !resumeExists && (
@@ -87,7 +93,7 @@ useEffect(() => {
 
             {token && (
               <Link
-          
+
                 className="text-white bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700"
               >
                 {user?.name || "Profile"}
@@ -155,10 +161,10 @@ useEffect(() => {
             )}
 
             {token && (
-  <div className="flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-lg text-sm">
-    👤 {user?.name || "Profile"}
-  </div>
-)}
+              <div className="flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-lg text-sm">
+                👤 {user?.name || "Profile"}
+              </div>
+            )}
 
             {!token ? (
               <Link
